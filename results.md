@@ -54,12 +54,13 @@ Correlation between arithmetic and geometric payoffs: 0.9996. Variance reduction
 | 504 | 3.4797 | 3.3192 | 3.3329 |
 
 
-### 6. Performance (European call, 10M draws, 2 CPU cores)
+### 6. Performance (European call, 10M draws, 4 cores, Apple Silicon MacBook Pro)
 | Implementation | Time (best of 5) | Speed-up vs NumPy |
 |---|---|---|
-| NumPy, vectorised | 156 ms | x1.0 |
-| C++ engine, 1 thread(s) | 122 ms | x1.3 |
-| C++ engine, 2 thread(s) | 61 ms | x2.6 |
+| NumPy, vectorised | 161 ms | x1.0 |
+| C++ engine, 1 thread(s) | 108 ms | x1.5 |
+| C++ engine, 2 thread(s) | 54 ms | x3.0 |
+| C++ engine, 4 thread(s) | 34 ms | x4.7 |
 
 
 Results are identical for any number of threads: each block of 16,384 paths has its own seeded random stream.

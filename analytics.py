@@ -1,7 +1,17 @@
 """Closed-form benchmarks used to validate the Monte Carlo engine."""
-from math import exp, log, sqrt
+from math import erfc, exp, log, pi, sqrt
 
-from scipy.stats import norm
+
+class norm:
+    """Standard normal cdf and pdf (no SciPy dependency)."""
+
+    @staticmethod
+    def cdf(x):
+        return 0.5 * erfc(-x / sqrt(2.0))
+
+    @staticmethod
+    def pdf(x):
+        return exp(-0.5 * x * x) / sqrt(2.0 * pi)
 
 
 def _d1_d2(S0, K, T, r, sigma):

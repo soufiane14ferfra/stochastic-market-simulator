@@ -10,7 +10,7 @@ closed-form solution**, and every number below is reproduced by one command (`ma
 | Variance reduction | Antithetic + control variate: **x29 lower variance** on a European call; geometric control variate: **x1,300** on an arithmetic Asian |
 | Greeks | Delta, Gamma, Vega (finite differences with common random numbers, and pathwise) all within 1.3 standard errors of Black-Scholes |
 | Barrier options | Brownian-bridge correction removes the discretisation bias: 3.331 with 4 time steps vs 3.333 exact, where naive monitoring gives 4.757 |
-| Performance | 10M paths in 61 ms on 2 cores, x2.6 faster than vectorised NumPy; identical results for any thread count |
+| Performance | 10M paths in 34 ms on 4 cores, x4.7 faster than vectorised NumPy; identical results for any thread count and machine |
 
 ## 1. Model
 
@@ -105,12 +105,14 @@ payoff by the survival probability removes the bias, even on a coarse grid:
 
 | 10M European paths | Time | Speed-up vs NumPy |
 |---|---|---|
-| NumPy, vectorised | 156 ms | x1.0 |
-| C++ engine, 1 thread | 122 ms | x1.3 |
-| C++ engine, 2 threads | 61 ms | x2.6 |
+| NumPy, vectorised | 161 ms | x1.0 |
+| C++ engine, 1 thread | 108 ms | x1.5 |
+| C++ engine, 2 threads | 54 ms | x3.0 |
+| C++ engine, 4 threads | 34 ms | x4.7 |
 
-*Timings on a 2-core cloud machine; the C++ engine scales with the number of cores. Re-run
-`make experiments` to measure your own machine.*
+*Timings on 4 cores of an Apple Silicon MacBook Pro (Linux VM, GCC -O3). Scaling is close to
+linear in the number of cores. Prices and errors are bit-for-bit identical on x86 and ARM.
+Re-run `make experiments` to measure your own machine.*
 
 ## Usage
 
